@@ -7,71 +7,77 @@
 # include <fcntl.h>
 #include "get_next_line.h"
 
-int	main ()
+char	*ft_gnl (int fd)
 {
-	int buffer_size;
-	int	fd;
-	int	bytes_read;
-	char	*buffer;
-	int	i;
+	int		buffer_size;
+	int		bytes_read;
+	int		i;
+	char	*text;
+
 	
 	buffer_size = 1024;
-	buffer = (char *)malloc(buffer_size * sizeof(char));
-	if (buffer == NULL) 
-		return 0;
-	fd = open("txt_to_read.txt", O_RDONLY);
-	bytes_read = read(fd, buffer, buffer_size);
-	i = 0;
+	text = (char *)malloc(buffer_size * sizeof(char));
+	if (text == NULL) 
+		return (NULL);
+	bytes_read = read(fd, text, buffer_size);
 	if (bytes_read == -1)
-		return 0;
+		return (NULL);
+	i = 0;
 	while (i < bytes_read)
 	{ 
-		if (buffer[i] == '\n') 
-		{ 
-			buffer[i] = '\0';
-			break; 
-		}
-		while (buffer[i] == '\0')
-		{
-			ft_putchar_fd(buffer[i], 1);
+		if (text[i] == '\n') 
+        {
+			text[i] = '\0';
+			break ; 
 		}
 		i++;
-	}
+    }
+    while (*text != '\0')
+		{
+			ft_putchar_fd(*text, 1);
+            text++;
+		}
+    return (text);
 }
 
+int main (void)
+{
+    	int	fd = open("txt_to_read.txt", O_RDONLY);
+        printf("%s\n", gnl(fd));
+		printf("%s\n", gnl(fd));
 
 /*
 
 const int BUFFER_SIZE = 1024;
-char *buffer = (char *)malloc(BUFFER_SIZE * sizeof(char));
-if (buffer == NULL) 
-	printf("Error al asignar memoria para el buffer\n"); return 1;
+char *text = (char *)malloc(BUFFER_SIZE * sizeof(char));
+if (text == NULL) 
+	printf("Error al asignar memoria para el text\n"); return 1;
 
-Utiliza la función read para leer la línea del archivo y almacenarla en el buffer:
+Utiliza la función read para leer la línea del archivo y almacenarla en el text:
 
-int bytes_read = read(fileno(file), buffer, BUFFER_SIZE);
+int bytes_read = read(fileno(file), text, BUFFER_SIZE);
 if (bytes_read == -1)
 	rintf("Error al leer el archivo\n"); return 1;
 
-Busca el salto de línea en el buffer y reemplázalo por un carácter de fin de cadena:
+Busca el salto de línea en el text y reemplázalo por un carácter de fin de cadena:
 
 for (int i = 0; i < bytes_read; i++) 
 { 
-	if (buffer[i] == '\n') 
+	if (text[i] == '\n') 
 		{ 
-			buffer[i] = '\0';
+			text[i] = '\0';
 			break; 
 		} 
 } 
 Imprime la línea del archivo en el terminal:
 
-printf("La línea del archivo es: %s\n", buffer); 
+printf("La línea del archivo es: %s\n", text); 
 
-Cierra el archivo y libera la memoria asignada dinámicamente para el buffer:
+Cierra el archivo y libera la memoria asignada dinámicamente para el text:
 
 fclose(file); 
 
-free(buffer); 
+free(text); 
 
 A continuación se muestra un ejemplo completo del programa:
 
@@ -85,9 +91,9 @@ int main()
 		printf("Error al abrir el archivo\n");
 		return 1;
 	}
-		  // Asigna memoria dinámicamente para el buffer 
+		  // Asigna memoria dinámicamente para el text 
 
-	char *buffer = (char *)malloc(BUFFER_SIZE * sizeof(char));
+	char *text = (char *)malloc(BUFFER_SIZE * sizeof(char));
 
 
 Nombre de función
@@ -118,13 +124,13 @@ n.
 
 
 • Tu programa debe compilar con el flag -D BUFFER_SIZE=xx. 
-Este flag se utilizará para determinar el tamaño del buffer de las lecturas de tu get_next_line()
+Este flag se utilizará para determinar el tamaño del text de las lecturas de tu get_next_line()
 Este parámetro será modificado por tus evaluadores y por Moulinette para probar tu
 programa.
 Debemos ser capaces de compilar este proyecto con y sin el flag -D BUFFER_SIZE, junto a los flags habituales. 
 Puedes elegir el valor por defecto que prefieras.
 
-• El programa se compilará de la siguiente forma (se utiliza como ejemplo un tamaño de buffer de 42):
+• El programa se compilará de la siguiente forma (se utiliza como ejemplo un tamaño de text de 42):
 cc -Wall -Werror -Wextra -D BUFFER_SIZE=42 <archivos>.c.
 
 • Se considera que get_next_line() tiene un comportamiento indeterminado si el
