@@ -16,17 +16,12 @@ char	*get_next_line (int fd)
 	static char	*text;
 	
 	if (text == NULL)
-		text = malloc(BUFFER_SIZE * sizeof(char));
-	if (!text || !fd) 
-	{
-		free (text);
+		text = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!text) 
 		return (NULL);
-	}
 	bytes_read = read(fd, text, BUFFER_SIZE);
 	if (bytes_read == -1)
-		{
 			return (NULL);
-		}
 	i = 0;
 	j = 0;
 	while (text[i] != '\n' && text[i] != '\0')
