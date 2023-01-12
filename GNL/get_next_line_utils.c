@@ -12,43 +12,6 @@
 
 #include "get_next_line.h"
 
-void	ft_putchar_fd(char c, int fd)
-{
-	write(fd, &c, 1);
-}
-
-size_t	ft_strlen(const char *s)
-{
-	int	i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
-void	*ft_memmove(void *dest, const void *src, size_t n)
-{
-	char	*dest2;
-	char	*src2;
-	size_t	i;
-
-	dest2 = (char *)dest;
-	src2 = (char *)src;
-	i = -1;
-	if (!dest && !src)
-		return (NULL);
-	if (dest2 > src2)
-		while ((int)(--n) >= 0)
-			dest2[n] = src2[n];
-	else
-		while (++i < n)
-			dest2[i] = src2[i];
-	return (dest);
-}
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		i;
@@ -76,4 +39,26 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (str);
 	}
 	return (0);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*copy;
+	size_t	len;
+	size_t	i;
+
+	len = 0;
+	i = 0;
+	while (s1[len] != '\0')
+		len++;
+	copy = malloc(sizeof(char) * (len + 1));
+	if (!(copy))
+		return (NULL);
+	while (s1[i])
+	{
+		copy[i] = s1[i];
+		i++;
+	}
+	copy[i] = '\0';
+	return (copy);
 }

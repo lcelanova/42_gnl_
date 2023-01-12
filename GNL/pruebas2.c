@@ -9,7 +9,6 @@
 
 char    *get_next_line(int fd)
 {
-    char	buffer[BUFFER_SIZE + 1];
     char	*line;
 	int  index_text;
     static char	text[BUFFER_SIZE + 1];
