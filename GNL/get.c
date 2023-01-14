@@ -19,7 +19,8 @@ char	*get_next_line (int fd)
 
     bytes_read = read(fd, buffer, BUFFER_SIZE);
     buffer[bytes_read] = '\0';
-	text = ft_strjoin(text, buffer);
+	if (text == NULL) 
+        text = ft_strdup(buffer);
     while (!ft_strchr(text,'\n') && bytes_read > 0)
     {
         bytes_read = read(fd, buffer, BUFFER_SIZE);
