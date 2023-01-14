@@ -18,8 +18,7 @@ char	*get_next_line (int fd)
 	
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	buffer[bytes_read] = '\0';
-	if (text == NULL) 
-        text = ft_strdup(buffer);
+	text = ft_strjoin(text, buffer);
 	while (!ft_strchr(text,'\n') && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
@@ -39,6 +38,7 @@ char	*get_next_line (int fd)
 	line_read = malloc(sizeof(char) * (i + 1));
 	if (!line_read)
 	{
+		free (line_read);
 		free (text);
 		return (NULL);
 	}

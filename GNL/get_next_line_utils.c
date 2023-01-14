@@ -6,7 +6,7 @@
 /*   By: lmunoz-f <lmunoz-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 18:58:48 by lmunoz-f          #+#    #+#             */
-/*   Updated: 2023/01/11 14:55:24 by lmunoz-f         ###   ########.fr       */
+/*   Updated: 2023/01/14 13:01:54 by lmunoz-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,26 @@ char	*ft_strchr(const char *s, int c)
 		s2++;
 	}
 	return (s2);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*copy;
+	size_t	len;
+	size_t	i;
+
+	len = 0;
+	i = 0;
+	while (s1[len] != '\0')
+		len++;
+	copy = malloc(sizeof(char) * (len + 1));
+	if (!(copy))
+		return (NULL);
+	while (s1[i])
+	{
+		copy[i] = s1[i];
+		i++;
+	}
+	copy[i] = '\0';
+	return (copy);
 }
