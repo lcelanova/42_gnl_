@@ -13,17 +13,20 @@ char	*get_next_line (int fd)
 	int			i;
 	int			j;
 	char		*line_read;
+	char		*temp;
 	char		buffer[BUFFER_SIZE + 1];
 	static char	*text;
 	
-	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	buffer[bytes_read] = '\0';
-	text = ft_strjoin(text, buffer);
+	bytes_read = 1;
+	if (text == NULL) 
+    	text = ft_strdup(buffer);
 	while (!ft_strchr(text,'\n') && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		buffer[bytes_read] = '\0';
-		text = ft_strjoin(text, buffer);
+		temp = ft_strjoin(text, buffer);
+		free(text);
+		text = temp;
 	}
 	if (bytes_read == -1)
 	{
@@ -49,7 +52,9 @@ char	*get_next_line (int fd)
 		j++;
 	}
 	line_read[j] = '\0';
-	text += i;
+	temp = ft_strdup(text + i);
+	free(text);
+	text = temp;
 	return (line_read);
 }
 
