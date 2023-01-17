@@ -10,43 +10,36 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc
-CFLAGS += -Wall -Wextra -Werror -Iinclude
-SAN += -fsanitize=address
-AR = ar
-
 NAME = get_next_line.a
 
-HEADER = get_next_line.h
+CC = gcc
+CFLAGS += -Wall -Wextra -Werror -D
+AR = rcs
+RM = rm -f
 
-SRC		 =	get_next_line.c \
-			get_next_line.h \
-			get_next_line_utlis.c \
+FILES		 =	get_next_line\
+				get_next_line_utlis\
 
-			 
+SRCS_DIR = ./
+SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(FILES)))
 
-OBJS = $(SRC:.c=.o)
+OBJS_DIR = ./
+OBJS = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES)))
+
+.c.o: $(SRCS)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(NAME): $(OBJS)
+	$(AR) $@ $^
 
 all: $(NAME)
 
-$(NAME): libft $(OBJS) $(HEADER) $(LIBFT_HEADER)
-	$(AR) -rcs $(NAME) $(OBJS)
-
-debug: CFLAGS += -g
-debug: fclean all
-	$(CC) $(SAN) $(CFLAGS) test.c $(NAME) -o test
-
-.o: .c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-bonus: all
-
 clean:
-	rm -f $(OBJS)
+	$(RM) $(OBJS)
 
 fclean: clean
-	rm -rf $(NAME)
+	$(RM) $(NAME)
 
-re: fclean all
+re: clean all
 
-.PHONY: all clean fclean re bonus debug
+.PHONY: bonus all clean fclean re
