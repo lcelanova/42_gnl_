@@ -12,6 +12,7 @@
 
 CC = cc
 CFLAGS += -Wall -Wextra -Werror -Iinclude
+SAN += -fsanitize=address
 AR = ar
 
 NAME = get_next_line.a
@@ -33,7 +34,7 @@ $(NAME): libft $(OBJS) $(HEADER) $(LIBFT_HEADER)
 
 debug: CFLAGS += -g
 debug: fclean all
-	$(CC) $(CFLAGS) test.c $(NAME) -o test
+	$(CC) $(SAN) $(CFLAGS) test.c $(NAME) -o test
 
 .o: .c
 	$(CC) $(CFLAGS) -c $< -o $@
