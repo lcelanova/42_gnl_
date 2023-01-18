@@ -16,17 +16,27 @@ char	*get_next_line (int fd)
 	static char	*text;
 	char		buffer[BUFFER_SIZE + 1];
 	
-	bytes_read = 7;
-	//system("leaks a.out");
+	if (fd < 0)
+		return (NULL);
+	bytes_read = 1;
 	while (!ft_strchr(text,'\n') && bytes_read > 0)
 	{
         bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == 0)
+			break ;
         buffer[bytes_read] = '\0';
         temp = ft_strjoin(text, buffer);
         free(text);
         text = temp;
 	}
 	if (bytes_read == -1)
+	{
+		free (text);
+		return (NULL);
+	}
+	if (!text)
+		return (NULL);
+	if (text[0] == '\0')
 	{
 		free (text);
 		return (NULL);
@@ -67,14 +77,3 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		i++;
 	return (i);
 }
-
-/* int	main()
-{
-	int fd;
-
-	fd = open("txt_to_read.txt", O_RDONLY);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-}
- */
