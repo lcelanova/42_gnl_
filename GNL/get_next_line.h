@@ -6,7 +6,7 @@
 /*   By: lmunoz-f <lmunoz-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 18:58:46 by lmunoz-f          #+#    #+#             */
-/*   Updated: 2023/01/19 12:48:25 by lmunoz-f         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:58:47 by lmunoz-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strlen(const char *s);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char	*join_and_free(char *text, char *buffer, int bytes_read);
+char	*copy_and_free(char *text, int i);
+int		find_n(char *string);
 
 #endif
