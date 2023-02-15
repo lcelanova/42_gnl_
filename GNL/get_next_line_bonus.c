@@ -10,33 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
 	int			bytes_read;
 	int			i;
 	char		*line_read;
-	static char	*text;
+	static char	*text[1024];
 	char		buffer[BUFFER_SIZE + 1];
 
 	bytes_read = 1;
-	while (bytes_read > 0 && !ft_strchr(text))
+	while (!ft_strchr(text[fd]) && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read <= 0)
 			break ;
-		text = join_and_free(text, buffer, bytes_read);
+		text[fd] = join_and_free(text[fd], buffer, bytes_read);
 	}
-	if (!text)
+	if (!text[fd])
 		return (NULL);
 	if (bytes_read == -1)
-		return (free (text), text = NULL, NULL);
-	if (text && text[0] == '\0')
-		return (free (text), text = NULL, NULL);
-	i = find_n(text);
-	line_read = ft_substr(text, 0, i);
-	text = copy_and_free(text, i);
+		return (free (text[fd]), text[fd] = NULL, NULL);
+	if (text[fd] && text[fd][0] == '\0')
+		return (free (text[fd]), text[fd] = NULL, NULL);
+	i = find_n(text[fd]);
+	line_read = ft_substr(text[fd], 0, i);
+	text[fd] = copy_and_free(text[fd], i);
 	return (line_read);
 }
 
@@ -96,19 +96,3 @@ int	find_n(char *string)
 		i++;
 	return (i);
 }
-
-/* #include <fcntl.h>
-
-int main(void)
-{
-	char *str;
-	int i = 20;
-	int fd = open("textoLimits.txt", O_RDONLY);
-
-	do
-	{
-		str = get_next_line(fd);
-		printf("L: %s\n", str);
-	} while (i--);
-	
-} */

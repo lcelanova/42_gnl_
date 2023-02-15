@@ -51,16 +51,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *s)
 {
-	unsigned char	c1;
 	char			*s2;
 
-	c1 = (unsigned char)c;
-	s2 = (char *) s;
-	if (s == NULL)
+	if (!s)
 		return (NULL);
-	while (*s2 != c1)
+	s2 = (char *) s;
+	while (*s2 != '\n')
 	{
 		if (*s2 == '\0')
 			return (NULL);
